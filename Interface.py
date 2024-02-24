@@ -1,7 +1,7 @@
 from PriceTracker import Scraper
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from flask import Flask, render_template
+from flask import Flask, render_template, render_template_string
 import threading
 from datetime import datetime
 import numpy as np
@@ -16,72 +16,59 @@ sc = Scraper(watchlist[1])
 name = sc.getTitle()
 print(sc.getPrice())
 
-html_template = """
-<!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Price Tracker</title>
-    </head>
-    <body>
+# html_template = """
+# <!DOCTYPE html>
+# <html lang = "en">
+#     <head>
+#         <meta charset="UTF-8" />
+#         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+#         <h1>Price Tracker</h1>
+#     </head>
+#     <body>
+#
+#     </body>
+# </html>
+# """
 
-    </body>
-</html>
-"""
-
+# beginning of Html file
 html_head = """
 <!DOCTYPE html>
 <html lang = "en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Price Tracker</title>
+        <h1>Price Tracker</h1>
     </head>
     <body>
 """
 
+# end of html file
 html_end = """
     </body>
 </html>
 """
+
+#create table for to display prices and time
 w, h = 2, 0
 prices = [[0 for x in range(w)] for y in range(h)]
 prices.append(["Times", "Prices"])
 
+#populate table w/ prices
 def updateTables():
-    threading.Timer(15, updateTables).start()
+    #threading.Timer(15, updateTables).start()
     prices.append([datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), sc.getPrice()])
     df = pd.DataFrame(prices)
     htmlChart = df.to_html(header=False, index=False)
-
-    soup = BeautifulSoup(html_template,"html.parser")
-
-
-    ProductName = soup.new_tag('title')
-    ProductName.string = sc.getTitle()
-    soup.body.append(ProductName)
-
-    chart = soup.new_tag('table')
-    chart.string = htmlChart
-    soup.body.append(chart)
-
-    #return str(soup)
-    print(str(soup))
+    ProductName = "<h2>" + name + "<h2>\n"
+    finalStr = (html_head + ProductName + htmlChart + html_end)
+    return finalStr
 
 
-
-
-updateTables()
 app = Flask(__name__)
-
 
 @app.route('/')
 def home():
-    return updateTables()
-    #return render_template("C:\\Users\\colin\\PycharmProjects\\WebScraper\\prices.html")
-
+    return render_template_string(updateTables())
 
 if __name__ == '__main__':
-    app.debug = True
     app.run()
