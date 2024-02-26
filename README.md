@@ -36,9 +36,9 @@ Enter item 1 url: https://www.amazon.com/...
 
 ## Example
 
-```python PriceTracker.py 10 5000 example@example.com```
+```python PriceTracker.py 1 5000 example@example.com```
 
-This command will track 10 items, checking every 5000 milliseconds (5 seconds), and sending emails to `example@example.com`. Adjust the values as needed.
+This command will track 1 items, checking every 5000 milliseconds (5 seconds), and sending emails to `example@example.com`. Adjust the values as needed.
 
 ## Licensing and Credits
 All credits go to Colin Shen and Cody Wang!

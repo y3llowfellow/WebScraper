@@ -1,6 +1,6 @@
 import smtplib
 from datetime import datetime
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
 
@@ -21,12 +21,14 @@ class Scraper:
 
     #Populate function web scrapes to update the table and attributes of Scraper object
     def populate(self):
-        page = urlopen(self.link)
+        webrequest = Request(self.link, headers={
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'})
+        page = urlopen(webrequest)
         html_bytes = page.read()
         html = html_bytes.decode("utf8")
         #Use BeautifulSoup to get html file
         soup = BeautifulSoup(html, "html.parser")
-
+        print(html)
         #Store the last recorded price to see if there are any changes
         lastPrice = self.table[len(self.table) - 1][1]
 
