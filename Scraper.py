@@ -28,7 +28,6 @@ class Scraper:
         html = html_bytes.decode("utf8")
         #Use BeautifulSoup to get html file
         soup = BeautifulSoup(html, "html.parser")
-        print(html)
         #Store the last recorded price to see if there are any changes
         lastPrice = self.table[len(self.table) - 1][1]
 
