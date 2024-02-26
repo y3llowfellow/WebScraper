@@ -29,7 +29,7 @@ The script `PriceTracker.py` takes the following command-line arguments:
 2. `interval_ms` (int): Milliseconds between price checks.
 3. `email` (str): Email address to send notifications.
 
-Then, the program will prompt users to enter the Amazon links of the prices they wish to track. See the following example
+Then, the program will prompt users to enter the Amazon links of the prices they wish to track. See the following example:
 ```
 Enter item 1 url: https://www.amazon.com/...
 ```
