@@ -2,15 +2,8 @@ from PriceTracker import Scraper
 import warnings
 warnings.simplefilter(action='ignore', category=DeprecationWarning)
 
-from bs4 import BeautifulSoup
 from flask import Flask, render_template, render_template_string
-import threading
-from datetime import datetime
-import numpy as np
 import pandas as pd
-import time
-import atexit
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
 #prompt users
